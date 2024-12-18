@@ -9,12 +9,10 @@ const App = () => {
 
   const checkAndRequestPermission = async () => {
     try {
-      // Only proceed for Android
       if (Platform.OS !== 'android') {
         return;
       }
 
-      // Check if we've already requested permission
       const hasRequestedBefore = await AsyncStorage.getItem('notificationPermissionRequested');
       
       if (hasRequestedBefore) {
@@ -22,7 +20,6 @@ const App = () => {
         return;
       }
 
-      // Request notification permission
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
         {
@@ -34,7 +31,6 @@ const App = () => {
         }
       );
 
-      // Store that we've requested permission
       await AsyncStorage.setItem('notificationPermissionRequested', 'true');
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
